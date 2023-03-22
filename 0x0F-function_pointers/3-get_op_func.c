@@ -1,16 +1,18 @@
 #include "3-calc.h"
-#include <stdlib.h>
+#include <stddef.h>
 
 /**
- * op_add - adds @a and @b
+ * get_op_func - get ops function pointer of type char array
+ *               that accepts two inputs of int data type
  *
- * @a: input 1
- * @b: input 2
+ * @s: a character pointer pointing to a symbol from the program argument
  *
- * Return: sum of @a and @b
+ * Return: one of the operator functions to perform calculations
 */
+
 int (*get_op_func(char *s))(int, int)
 {
+	/* struct opts of struct op_t */
 	op_t ops[] = {
 		{"+", op_add},
 		{"-", op_sub},
@@ -21,8 +23,12 @@ int (*get_op_func(char *s))(int, int)
 	};
 	int i = 0;
 
-	while (ops[i].op != NULL && *(ops[i].op) != *s)
+	while (i < 5)
+	{
+		if (*s == *ops[i].op)
+			return (ops[i].f);
 		i++;
+	}
 
-	return (ops[i].f);
+	return (NULL);
 }
